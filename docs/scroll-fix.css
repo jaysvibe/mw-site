@@ -1,0 +1,14 @@
+#catalogView iframe,
+#dictionaryView iframe {
+  height: 900px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 760px) {
+  #catalogView iframe,
+  #dictionaryView iframe {
+    height: 900px;
+    min-height: 0;
+  }
+}
