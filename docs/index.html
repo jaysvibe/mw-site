@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="brand.css">
   <link rel="stylesheet" href="brand-app.css">
+  <link rel="stylesheet" href="wizard.css">
   <link rel="stylesheet" href="scroll-fix.css">
 </head>
 <body>
@@ -31,6 +32,12 @@
   </nav>
 
   <main id="partsView" class="workspace-view" role="tabpanel" aria-labelledby="tab-parts">
+    <div class="wizard-entry">
+      <button class="wz-btn" type="button" data-open-wizard>不知道从哪开始？用向导（3 步）</button>
+      <span class="wizard-entry-tip">不懂参数也能用：先选零件类型，再填客户给的尺寸</span>
+    </div>
+    <div id="wizardBox" aria-live="polite"></div>
+
     <section class="search-panel" aria-label="产品搜索">
       <label for="query">型号或关键词</label>
       <div class="search-row">
@@ -131,5 +138,6 @@
 
   <script src="search.js?v=14"></script>
   <script src="ui.js?v=20"></script>
+  <script src="wizard.js?v=1"></script>
 </body>
 </html>
