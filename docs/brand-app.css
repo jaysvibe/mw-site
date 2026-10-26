@@ -85,3 +85,24 @@
   .summary>div:last-child{text-align:left;width:100%}
   body{overflow-x:hidden}
 }
+
+/* compact header (home) */
+.topbar{padding:10px max(24px,calc((100vw - 1440px)/2));align-items:center;gap:18px;border-bottom-width:4px}
+.brand-heading{gap:18px}
+.brand-logo{padding:8px 12px}
+.brand-logo img{width:168px}
+.page-heading{padding-left:18px}
+.topbar h1{font-size:clamp(1.05rem,1.6vw,1.3rem);letter-spacing:0}
+.topbar p{font-size:.78rem;margin-top:3px}
+.stat{padding-left:18px}
+.stat strong{font-size:1.6rem}
+.stat span{font-size:.72rem}
+@media(max-width:760px){
+  .topbar{padding:8px 12px;gap:10px}
+  .brand-heading{gap:10px;flex-direction:row;align-items:center}
+  .brand-logo{padding:6px 8px}
+  .brand-logo img{width:132px}
+  .page-heading{padding:0;border:0}
+  .topbar h1{font-size:1.02rem}
+  .topbar p{display:none}
+}
