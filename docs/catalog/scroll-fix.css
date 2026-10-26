@@ -1,0 +1,6 @@
+.tools {
+  position: static;
+  z-index: auto;
+  background: transparent;
+  backdrop-filter: none;
+}
