@@ -1,0 +1,52 @@
+/* MW unified brand layer for dictionary / catalog sub-pages */
+header,
+.hero{
+  background:#101820 !important;
+  border-bottom:5px solid #FFD600 !important;
+  color:#fff !important;
+}
+header h1,
+.hero h1,
+.hero .count strong{color:#fff !important}
+header p,
+header small,
+.hero p,
+.hero .eyebrow,
+.hero .count span{color:#c4c9ce !important}
+.hero .eyebrow{letter-spacing:.16em;font-weight:800;color:#FFD600 !important}
+
+a{color:#101820}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #FFD600 !important;outline-offset:3px}
+
+/* dictionary */
+:root{--blue:#101820;--border:#d7dce1}
+#tabs button[aria-pressed="true"],
+#modes button[aria-pressed="true"]{
+  background:#FFD600 !important;
+  border-color:#FFD600 !important;
+  color:#101820 !important;
+  font-weight:750;
+}
+.entry{border-top-color:#FFD600 !important}
+.entry .en{color:#101820 !important}
+.entry button{color:#101820}
+.term-link:hover{color:#101820;border-bottom-color:#FFD600}
+.dialogbar{background:#101820 !important;color:#fff !important}
+dialog{border-top:5px solid #FFD600 !important}
+
+/* catalog */
+:root{--navy:#101820;--blue:#101820;--cyan:#FFD600}
+.filters button.active{
+  background:#FFD600 !important;
+  border-color:#FFD600 !important;
+  color:#101820 !important;
+}
+.search input:focus{border-color:#101820 !important;box-shadow:0 0 0 3px #ffdc0040 !important}
+.intro strong{color:#101820 !important}
+.badge,.tag{background:#FFF5C2;color:#101820}
+
+footer{border-top:1px solid #d7dce1;color:#5b626b}
+footer::before{
+  content:"MW Components - 工程资料";
+  display:block;font-weight:700;color:#101820;margin-bottom:6px;
+}
