@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="按外径、内径、长度、波纹数、弹簧刚度等参数匹配 MW Components 与 Century Spring 标准件。">
+  <meta name="theme-color" content="#101820">
+  <title>MW Components 工程查询中心</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="brand.css">
+  <link rel="stylesheet" href="brand-app.css">
+  <link rel="stylesheet" href="scroll-fix.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-heading">
+      <a class="brand-logo" href="https://www.mwcomponents.com" target="_blank" rel="noopener"><img src="mw-logo.png" alt="MW Components" width="310" height="43"></a>
+      <div class="page-heading">
+        <h1>工程查询中心</h1>
+        <p>标准件参数与机械工程术语，一站式检索</p>
+      </div>
+    </div>
+    <div class="stat"><strong id="recordCount">—</strong><span>个可查型号</span></div>
+  </header>
+
+  <nav class="workspace-tabs" role="tablist" aria-label="查询板块">
+    <button class="workspace-tab active" type="button" role="tab" id="tab-parts" aria-controls="partsView" aria-selected="true" tabindex="0" data-view="parts">标准品查询</button>
+    <button class="workspace-tab" type="button" role="tab" id="tab-dictionary" aria-controls="dictionaryView" aria-selected="false" tabindex="-1" data-view="dictionary">技术参数大辞典</button>
+    <button class="workspace-tab" type="button" role="tab" id="tab-catalog" aria-controls="catalogView" aria-selected="false" tabindex="-1" data-view="catalog">MW 产品分类表</button>
+  </nav>
+
+  <main id="partsView" class="workspace-view" role="tabpanel" aria-labelledby="tab-parts">
+    <section class="search-panel" aria-label="产品搜索">
+      <label for="query">型号或关键词</label>
+      <div class="search-row">
+        <input id="query" type="search" placeholder="可输入型号、材料，也可只填写下方参数" autocomplete="off">
+        <button id="clear" type="button">清除全部</button>
+      </div>
+
+      <div class="controls">
+        <label>产品类型<select id="productType"><option value="">全部产品</option><option value="bellows">波纹管</option><option value="coupling">联轴器</option><option value="spring">弹簧</option><option value="other">其他</option></select></label>
+        <label>品牌<select id="brand"><option value="">全部品牌</option></select></label>
+        <label>类别<select id="category"><option value="">全部类别</option></select></label>
+        <label>最大偏差<select id="tolerance"><option value="0">完全相同</option><option value="0.05">±5%</option><option value="0.10" selected>±10%</option><option value="0.20">±20%</option><option value="0.30">±30%</option></select></label>
+      </div>
+
+      <details class="param-toggle" id="paramToggle">
+        <summary><span>按客户参数匹配</span><em>外径 / 内径 / 长度 / 刚度等 12 项，可组合</em></summary>
+        <div id="parameterGrid" class="parameter-grid">
+          <label>外径 <span>mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="od" placeholder="例如 3.8"></label>
+          <label>内径 <span>mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="id" placeholder="例如 2.1"></label>
+          <label>孔径 / 轴径 <span>mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="bore" placeholder="例如 6"></label>
+          <label>总长度 <span>mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="length" placeholder="例如 11.95"></label>
+          <label>自由长度 <span>mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="freeLength" placeholder="例如 25.4"></label>
+          <label>波纹段长度 <span>mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="convolutionLength" placeholder="例如 8"></label>
+          <label>波纹数 <span>个</span><input inputmode="decimal" type="number" step="any" min="0" data-param="convolutions" placeholder="例如 12"></label>
+          <label>线径 / 壁厚 <span>mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="thickness" placeholder="例如 0.5"></label>
+          <label>弹簧刚度 <span>N/mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="rate" placeholder="例如 1.8"></label>
+          <label>最大扭矩 <span>N·m</span><input inputmode="decimal" type="number" step="any" min="0" data-param="torque" placeholder="例如 2"></label>
+          <label>行程 <span>mm</span><input inputmode="decimal" type="number" step="any" min="0" data-param="stroke" placeholder="例如 0.7"></label>
+          <label>最大载荷 <span>N</span><input inputmode="decimal" type="number" step="any" min="0" data-param="load" placeholder="例如 15"></label>
+        </div>
+        <p class="hint">尺寸以毫米输入；波纹数不带单位。结果按最大偏差和实际差值排序。产品没有公开相应参数时不会猜测匹配；Engineered Spring Products 仅展示定制能力，不计入标准型号结果。</p>
+      </details>
+    </section>
+
+    <section class="summary" aria-live="polite">
+      <div><strong id="resultCount">0</strong><span>项结果</span></div>
+      <div id="activeQuery">输入关键词或参数开始查询</div>
+    </section>
+    <p id="loadState" class="load-state" hidden></p>
+
+    <section id="welcome" class="welcome" aria-labelledby="welcomeTitle">
+      <h2 id="welcomeTitle">从一个型号，或一个尺寸开始</h2>
+      <p>已收录 <strong id="totalCount">—</strong> 个标准型号：MW 全品牌基础型号，以及 Century Spring 压缩与拉伸弹簧。输入型号可直接定位，填写参数可做近似匹配。</p>
+      <div class="welcome-actions">
+        <button type="button" class="chip-btn" data-example="10075">试试型号 10075</button>
+        <button type="button" class="chip-btn" data-example="压缩弹簧">压缩弹簧</button>
+        <button type="button" class="chip-btn" data-example="联轴器">联轴器</button>
+        <button type="button" class="chip-btn ghost" id="loadSprings">加载全部弹簧库</button>
+      </div>
+      <p class="welcome-note">弹簧库约 2 万个型号，默认<b>不加载</b>；查询弹簧类参数、或型号在核心库未命中时自动补全，所以首屏只等 4 MB。</p>
+    </section>
+
+    <section class="results-wrap" id="resultsWrap">
+      <div id="tableWrap">
+        <table>
+          <caption class="sr-only">标准件查询结果</caption>
+          <thead><tr><th scope="col">型号 / 官网</th><th scope="col">品牌 / 分类</th><th scope="col">参数与差异</th><th scope="col">单件价格 / 报价状态</th><th scope="col">匹配档位</th></tr></thead>
+          <tbody id="results"></tbody>
+        </table>
+      </div>
+      <div id="cards" class="cards" hidden></div>
+      <button id="more" class="more" type="button" hidden>显示更多</button>
+      <div id="empty" class="empty" hidden>没有找到符合当前条件的标准型号。</div>
+    </section>
+
+    <section class="custom-panel">
+      <h2>Engineered Spring Products · 按图定制</h2>
+      <p>官网公开的产品范围包括压缩弹簧、拉伸弹簧、扭转弹簧、碟形垫圈、板簧 / 弓形弹簧、锥形环形弹簧、螺栓和管材加工。常用 Elgiloy、Inconel、MP35N 等特殊合金，适合高温、腐蚀和疲劳工况。官网未公开可核实的标准型号表，因此此处展示制造能力，暂不计入上方标准型号数量。</p>
+      <a href="https://www.mwcomponents.com/locations/engineered-spring-products/products" target="_blank" rel="noopener">查看官方产品与提交图纸询价 ↗</a>
+    </section>
+
+    <section class="method">
+      <h2>数据口径</h2>
+      <div class="method-grid">
+        <p><strong>基础型号</strong>指官方目录中的标准设计型号。可配置联轴器的两端孔径组合不会被重复计算为新的设计型号。</p>
+        <p><strong>参数换算</strong>保留官方原始值，并提供 mm、MPa、N、N·m 等公制值。换算值仅用于搜索和比较。</p>
+        <p><strong>目录范围</strong>Century Spring 已收录官方目录中的标准压缩和拉伸弹簧。Engineered Spring Products 为按图定制；BellowsTech 的完整波纹管仍需按应用确定。</p>
+      </div>
+      <h2>官方资料来源</h2>
+      <ul id="sources"></ul>
+    </section>
+
+    <footer class="brand-footer"><span>MW Components 产品资料查询工具</span><a href="https://www.mwcomponents.com" target="_blank" rel="noopener">访问品牌官网 ↗</a></footer>
+  </main>
+
+  <section id="dictionaryView" class="workspace-view dictionary-view" role="tabpanel" aria-labelledby="tab-dictionary" hidden>
+    <iframe id="dictionaryFrame" title="机械工程中英双语技术参数大辞典" data-src="dictionary/index.html?v=14" loading="lazy"></iframe>
+  </section>
+
+  <section id="catalogView" class="workspace-view dictionary-view" role="tabpanel" aria-labelledby="tab-catalog" hidden>
+    <iframe id="catalogFrame" title="MW Components 中英双语产品分类表" data-src="catalog/index.html?v=4" loading="lazy"></iframe>
+  </section>
+
+  <dialog id="detail" aria-label="型号参数详情">
+    <button class="close" aria-label="关闭">×</button>
+    <div id="detailContent"></div>
+  </dialog>
+
+  <script src="search.js?v=14"></script>
+  <script src="ui.js?v=20"></script>
+</body>
+</html>
