@@ -126,14 +126,11 @@ function search() {
   const tolerance = Number($("#tolerance").value);
 
   if (!q && criteria.length === 0 && !$("#productType").value && !$("#brand").value && !$("#category").value) {
-    current = [];
-    showWelcome(true);
-    $("#resultCount").textContent = "0";
-    $("#activeQuery").textContent = "输入关键词或参数开始查询";
-    $("#results").innerHTML = "";
-    $("#cards").innerHTML = "";
-    $("#more").hidden = true;
-    $("#empty").hidden = true;
+    current = data.slice();
+    showWelcome(false);
+    $("#resultCount").textContent = String(current.length);
+    $("#activeQuery").textContent = `全部 ${current.length} 个型号（输入关键词或参数筛选）`;
+    render();
     syncURL();
     return;
   }
