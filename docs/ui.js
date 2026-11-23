@@ -69,6 +69,7 @@ async function ensureCore() {
       .join("");
     setLoadState("done", "");
     applyURL();
+    if (!hasQuery()) search();
   } catch (e) {
     setLoadState("error", "索引加载失败，请刷新重试。");
     $("#empty").hidden = false;
