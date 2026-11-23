@@ -126,7 +126,7 @@ function search() {
   const tolerance = Number($("#tolerance").value);
 
   if (!q && criteria.length === 0 && !$("#productType").value && !$("#brand").value && !$("#category").value) {
-    current = data.slice();
+    current = data.map((r) => ({ r, modelRank: 0, numeric: false, tier: 0 }));
     showWelcome(false);
     $("#resultCount").textContent = String(current.length);
     $("#activeQuery").textContent = `全部 ${current.length} 个型号（输入关键词或参数筛选）`;
